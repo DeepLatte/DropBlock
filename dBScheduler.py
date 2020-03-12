@@ -12,7 +12,10 @@ class probScheduler(nn.Module):
         self.prob_schedule = np.linspace(start_prob, end_prob, iteration)
     
     def forward(self, input):
-        return self.dropBlock(input)
+        out = self.dropBlock(input)
+        self.step()
+
+        return out
 
     def step(self):
         if self.i < len(self.prob_schedule):
@@ -29,6 +32,6 @@ if __name__ == "__main__":
     pS = probScheduler(drop, start_prob, end_prob, 100)
     drop.train()
     for _ in range(100):
-        pS.step()
+        # pS.step()
         pS(x)
         
