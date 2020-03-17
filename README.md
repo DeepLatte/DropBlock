@@ -11,8 +11,8 @@ This dropblock implementation supports data with 1d and 2d.
 - Use dropblock with constant the probability of removal
     - Import `dB.py` only.
 - Use dropBlock with the scheduled probability
-    - `from DropBlock import dBScheduler`
-    - `from DropBlock import dB`
+    - `from dBScheduler import probScheduler`
+    - `from dB import dropBlock`
 
 ## Reference
 
