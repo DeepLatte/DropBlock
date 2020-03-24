@@ -22,7 +22,7 @@ class dropBlock(nn.Module):
         self.Training can check whether in training mode or eval mode.
         '''
         if len(input.size()) == 3:
-            if not self.training or self.prob == 1:
+            if (not self.training) or (self.prob == 0):
                 output = input
             else:
                 gamma = self.calGamma(self.prob, self.block_size, input.size(-1), 1)
@@ -35,7 +35,7 @@ class dropBlock(nn.Module):
                     output = output * mask.numel() / mask.sum()
 
         elif len(input.size()) == 4:
-            if not self.training or self.prob == 1:
+            if (not self.training) or (self.prob == 0):
                 output = input
             else:
                 gamma = self.calGamma(self.prob, self.block_size, input.size(-1), 2)
@@ -53,11 +53,11 @@ class dropBlock(nn.Module):
     def calGamma(prob, block_size, feat_size, n):
         return prob*(feat_size**n)/((block_size**n)*(feat_size-block_size+1)**n)
 
-if __name__ == "__main__":
-    prob = 0.3
-    block_size = 5
-    x = torch.ones([5, 10, 125, 125])
-    drop = dropBlock(prob, block_size)
-    drop.train()
-    for _ in range(100):
-        drop(x)
+# if __name__ == "__main__":
+#     prob = 0.3
+#     block_size = 5
+#     x = torch.ones([5, 10, 125, 125])
+#     drop = dropBlock(prob, block_size)
+#     drop.train()
+#     for _ in range(100):
+#         drop(x)
